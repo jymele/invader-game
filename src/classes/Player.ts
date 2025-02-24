@@ -9,7 +9,7 @@ class Player {
   private height: number;
   private x: number;
   private y: number;
-  private speed: number = 5;
+  private speed: number = 10;
 
   constructor(game: Game) {
     this.game = game;
@@ -24,7 +24,20 @@ class Player {
   }
 
   update() {
-    this.x += this.speed;
+    // horizontal movement
+    if (this.game.keys.indexOf("ArrowLeft") > -1) {
+      this.x -= this.speed;
+    }
+    if (this.game.keys.indexOf("ArrowRight") > -1) {
+      this.x += this.speed;
+    }
+
+    // horizontal boundaries
+    if (this.x < 0) {
+      this.x = 0;
+    } else if (this.x > this.game.width - this.width) {
+      this.x = this.game.width - this.width;
+    }
   }
 }
 
