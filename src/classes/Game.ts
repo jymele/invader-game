@@ -1,5 +1,7 @@
 import Player from "./Player";
 import Projectile from "./Projectile";
+import Wave from "./Wave";
+
 /**
  * Contains the game logic.
  */
@@ -11,6 +13,12 @@ class Game {
   private player: Player;
   public keys: string[];
 
+  // enemy wave data
+  public columns: number;
+  public rows: number;
+  public enemysize: number;
+  private waves: Wave[];
+
   projectilePool: Projectile[];
   numberOfProjectiles: number;
 
@@ -21,11 +29,18 @@ class Game {
     this.keys = [];
     this.player = new Player(this);
 
+    this.columns = 3;
+    this.rows = 3;
+    this.enemysize = 60;
+
+    this.waves = [];
+    this.waves.push(new Wave(this));
+
     window.addEventListener("keydown", (e) => {
       if (this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
       }
-      if (e.key === "1") this.player.shoot();
+      // if (e.key === "1") this.player.shoot();
     });
     window.addEventListener("keyup", (e) => {
       const index = this.keys.indexOf(e.key);
@@ -44,6 +59,11 @@ class Game {
     this.projectilePool.forEach((projectile) => {
       projectile.update();
       projectile.draw(context);
+    });
+
+    // draw the enemy wave
+    this.waves.forEach((wave) => {
+      wave.render(context);
     });
   }
 

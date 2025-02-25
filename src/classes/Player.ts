@@ -32,6 +32,10 @@ class Player {
       this.x += this.speed;
     }
 
+    if (this.game.keys.indexOf("1") > -1) {
+      this.shoot();
+    }
+
     // horizontal boundaries
     if (this.x < -this.width * 0.5) {
       this.x = -this.width * 0.5;
