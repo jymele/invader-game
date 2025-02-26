@@ -10,6 +10,7 @@ class Wave {
   speedX: number;
   speedY: number;
   enemies: Enemy[];
+  public nextWaveTrigger: boolean;
 
   constructor(game: Game) {
     this.game = game;
@@ -20,6 +21,7 @@ class Wave {
     this.speedX = 3;
     this.speedY = 0;
     this.enemies = [];
+    this.nextWaveTrigger = false;
     this.create();
   }
 

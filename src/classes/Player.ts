@@ -5,11 +5,12 @@ import Game from "./Game";
  */
 class Player {
   private game: Game;
-  private width: number;
-  private height: number;
-  private x: number;
-  private y: number;
-  private speed: number = 10;
+  public width: number;
+  public height: number;
+  public x: number;
+  public y: number;
+  private speed: number;
+  public lives: number;
 
   constructor(game: Game) {
     this.game = game;
@@ -17,6 +18,8 @@ class Player {
     this.height = 100;
     this.x = this.game.width * 0.5 - this.width * 0.5;
     this.y = this.game.height - this.height;
+    this.speed = 10;
+    this.lives = 3;
   }
 
   draw(context: CanvasRenderingContext2D) {
