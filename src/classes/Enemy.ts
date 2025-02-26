@@ -8,6 +8,7 @@ class Enemy {
   y: number;
   positionX: number;
   positionY: number;
+  markedForDeletion: boolean;
 
   constructor(game: Game, positionX: number, positionY: number) {
     this.game = game;
@@ -17,6 +18,7 @@ class Enemy {
     this.y = 0;
     this.positionX = positionX;
     this.positionY = positionY;
+    this.markedForDeletion = false;
   }
 
   draw(context: CanvasRenderingContext2D) {
@@ -26,6 +28,13 @@ class Enemy {
   update(x: number, y: number) {
     this.x = x + this.positionX;
     this.y = y + this.positionY;
+    // check for collision between enemies and projectiles
+    this.game.projectilePool.forEach((projectile) => {
+      if (!projectile.free && this.game.checkCollision(this, projectile)) {
+        this.markedForDeletion = true;
+        projectile.reset();
+      }
+    });
   }
 }
 

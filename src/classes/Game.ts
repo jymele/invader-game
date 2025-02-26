@@ -1,3 +1,4 @@
+import Enemy from "./Enemy";
 import Player from "./Player";
 import Projectile from "./Projectile";
 import Wave from "./Wave";
@@ -50,7 +51,7 @@ class Game {
     this.projectilePool = [];
     this.numberOfProjectiles = 10;
     this.createProjectiles();
-    console.log(this.projectilePool);
+    // console.log(this.projectilePool);
   }
 
   render(context: CanvasRenderingContext2D) {
@@ -81,6 +82,16 @@ class Game {
         return this.projectilePool[i];
       }
     }
+  }
+
+  // collision detection between 2 rectangles
+  checkCollision(a: Projectile | Enemy, b: Wave | Projectile) {
+    return (
+      a.x < b.x + b.width &&
+      a.x + a.width > b.x &&
+      a.y < b.y + b.height &&
+      a.y + a.height > b.y
+    );
   }
 }
 

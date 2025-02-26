@@ -38,6 +38,7 @@ class Wave {
       enemy.update(this.x, this.y);
       enemy.draw(context);
     });
+    this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
   }
 
   create() {
