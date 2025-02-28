@@ -7,8 +7,8 @@ class Projectile {
   free: boolean;
 
   constructor() {
-    this.width = 4;
-    this.height = 4;
+    this.width = 3;
+    this.height = 40;
     this.x = 0;
     this.y = 0;
     this.speed = 20;
@@ -17,7 +17,10 @@ class Projectile {
 
   draw(context: CanvasRenderingContext2D) {
     if (!this.free) {
+      context.save();
+      context.fillStyle = "gold";
       context.fillRect(this.x, this.y, this.width, this.height);
+      context.restore();
     }
   }
 

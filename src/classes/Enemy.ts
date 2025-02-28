@@ -48,16 +48,9 @@ class Enemy {
     this.y = y + this.positionY;
 
     // check collision between enemies and player
-    if (this.game.checkCollision(this, this.game.player)) {
-      // this.markedForDeletion = true;
-      this.hit(1);
-      if (!this.game.gameOver && this.game.score > 0) {
-        this.game.score--;
-        this.game.player.lives--;
-        if (this.game.player.lives < 1) {
-          this.game.gameOver = true;
-        }
-      }
+    if (this.game.checkCollision(this, this.game.player) && this.lives > 0) {
+      this.lives = 0;
+      this.game.player.lives--;
     }
 
     if (this.lives < 1) {
@@ -81,9 +74,8 @@ class Enemy {
     });
 
     //lose condition
-    if (this.y + this.height > this.game.height) {
+    if (this.y + this.height > this.game.height || this.game.player.lives < 1) {
       this.game.gameOver = true;
-      this.markedForDeletion = true;
     }
   }
 
