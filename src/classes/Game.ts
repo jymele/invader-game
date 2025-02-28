@@ -22,6 +22,10 @@ class Game {
   private waveCount: number;
   private fired: boolean;
 
+  spriteUpdate: boolean;
+  spriteTimer: number;
+  spriteInterval: number;
+
   projectilePool: Projectile[];
   numberOfProjectiles: number;
 
@@ -36,6 +40,9 @@ class Game {
     this.keys = [];
     this.player = new Player(this);
     this.fired = false;
+    this.spriteUpdate = false;
+    this.spriteTimer = 0;
+    this.spriteInterval = 120;
 
     this.enemysize = 80;
 
@@ -78,7 +85,17 @@ class Game {
     this.initialize();
   }
 
-  render(context: CanvasRenderingContext2D) {
+  render(context: CanvasRenderingContext2D, deltaTime: number) {
+    // console.log(deltaTime);
+
+    if (this.spriteTimer > this.spriteInterval) {
+      this.spriteUpdate = true;
+      this.spriteTimer = 0;
+    } else {
+      this.spriteUpdate = false;
+      this.spriteTimer += deltaTime;
+    }
+
     this.drawStatusText(context);
     this.player.draw(context);
     this.player.update();

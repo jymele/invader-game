@@ -22,10 +22,21 @@ window.addEventListener("load", () => {
 
   const game = new Game(canvas);
 
-  function animate() {
+  let lastTime = 0;
+
+  function animate(timestamp?: number) {
+    // The first time the function is called, the timestamp is undefined
+    // This could also be solved simply by calling animate(0)
+    if (timestamp === undefined) {
+      timestamp = 0;
+    }
+
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+
     // clear the canvas before rendering the next frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.render(ctx);
+    game.render(ctx, deltaTime);
     requestAnimationFrame(animate);
   }
 

@@ -61,7 +61,7 @@ class Enemy {
     }
 
     if (this.lives < 1) {
-      this.frameX++;
+      if (this.game.spriteUpdate) this.frameX++;
       if (this.frameX >= this.maxFrame) {
         this.markedForDeletion = true;
         if (!this.game.gameOver) this.game.score += this.maxLives;
@@ -70,7 +70,11 @@ class Enemy {
 
     // check for collision between enemies and projectiles
     this.game.projectilePool.forEach((projectile) => {
-      if (!projectile.free && this.game.checkCollision(this, projectile)) {
+      if (
+        !projectile.free &&
+        this.game.checkCollision(this, projectile) &&
+        this.lives > 0
+      ) {
         this.hit(1);
         projectile.reset();
       }
