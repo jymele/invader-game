@@ -9,6 +9,7 @@ class Enemy {
   positionX: number;
   positionY: number;
   markedForDeletion: boolean;
+  image: HTMLImageElement;
 
   constructor(game: Game, positionX: number, positionY: number) {
     this.game = game;
@@ -23,6 +24,7 @@ class Enemy {
 
   draw(context: CanvasRenderingContext2D) {
     context.strokeRect(this.x, this.y, this.width, this.height);
+    context.drawImage(this.image, this.x, this.y);
   }
 
   update(x: number, y: number) {

@@ -1,4 +1,5 @@
 import Enemy from "./Enemy";
+import Beetlemorph from "./Beetlemorph";
 import Game from "./Game";
 
 class Wave {
@@ -48,7 +49,7 @@ class Wave {
       for (let x = 0; x < this.game.columns; x++) {
         let enemyX = x * this.game.enemysize;
         let enemyY = y * this.game.enemysize;
-        this.enemies.push(new Enemy(this.game, enemyX, enemyY));
+        this.enemies.push(new Beetlemorph(this.game, enemyX, enemyY));
       }
     }
   }
