@@ -10,6 +10,12 @@ class Enemy {
   positionY: number;
   markedForDeletion: boolean;
   image: HTMLImageElement;
+  frameX: number;
+  frameY: number;
+  lives: number = 0;
+  maxFrame: number = 0;
+  maxLives: number = 0;
+  11;
 
   constructor(game: Game, positionX: number, positionY: number) {
     this.game = game;
@@ -23,8 +29,18 @@ class Enemy {
   }
 
   draw(context: CanvasRenderingContext2D) {
-    context.strokeRect(this.x, this.y, this.width, this.height);
-    context.drawImage(this.image, this.x, this.y);
+    // context.strokeRect(this.x, this.y, this.width, this.height);
+    context.drawImage(
+      this.image,
+      this.frameX * this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   update(x: number, y: number) {
@@ -33,7 +49,8 @@ class Enemy {
 
     // check collision between enemies and player
     if (this.game.checkCollision(this, this.game.player)) {
-      this.markedForDeletion = true;
+      // this.markedForDeletion = true;
+      this.hit(1);
       if (!this.game.gameOver && this.game.score > 0) {
         this.game.score--;
         this.game.player.lives--;
@@ -43,12 +60,19 @@ class Enemy {
       }
     }
 
+    if (this.lives < 1) {
+      this.frameX++;
+      if (this.frameX >= this.maxFrame) {
+        this.markedForDeletion = true;
+        if (!this.game.gameOver) this.game.score += this.maxLives;
+      }
+    }
+
     // check for collision between enemies and projectiles
     this.game.projectilePool.forEach((projectile) => {
       if (!projectile.free && this.game.checkCollision(this, projectile)) {
-        this.markedForDeletion = true;
+        this.hit(1);
         projectile.reset();
-        if (!this.game.gameOver) this.game.score++;
       }
     });
 
@@ -57,6 +81,10 @@ class Enemy {
       this.game.gameOver = true;
       this.markedForDeletion = true;
     }
+  }
+
+  hit(damage: number) {
+    this.lives -= damage;
   }
 }
 

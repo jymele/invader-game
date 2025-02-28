@@ -37,7 +37,7 @@ class Game {
     this.player = new Player(this);
     this.fired = false;
 
-    this.enemysize = 60;
+    this.enemysize = 80;
 
     this.initialize();
 
