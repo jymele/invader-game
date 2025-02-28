@@ -20,6 +20,7 @@ class Game {
   public enemysize: number;
   private waves: Wave[];
   private waveCount: number;
+  private fired: boolean;
 
   projectilePool: Projectile[];
   numberOfProjectiles: number;
@@ -34,33 +35,47 @@ class Game {
     this.height = this.canvas.height;
     this.keys = [];
     this.player = new Player(this);
+    this.fired = false;
 
-    this.columns = 3;
-    this.rows = 3;
     this.enemysize = 60;
 
-    this.waves = [];
-    this.waves.push(new Wave(this));
-    this.waveCount = 1;
-
-    this.score = 0;
-    this.gameOver = false;
+    this.initialize();
 
     window.addEventListener("keydown", (e) => {
       if (this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
       }
-      // if (e.key === "1") this.player.shoot();
+      if (e.key === "1" && !this.fired) {
+        this.player.shoot();
+        this.fired = true;
+      }
+      if (e.key === "r" && this.gameOver) this.restart();
     });
     window.addEventListener("keyup", (e) => {
       const index = this.keys.indexOf(e.key);
       if (index > -1) this.keys.splice(index, 1);
+      if (e.key === "1") this.fired = false;
     });
 
     this.projectilePool = [];
     this.numberOfProjectiles = 10;
     this.createProjectiles();
     // console.log(this.projectilePool);
+  }
+
+  initialize() {
+    this.columns = 2;
+    this.rows = 2;
+    this.waves = [];
+    this.waves.push(new Wave(this));
+    this.waveCount = 1;
+    this.score = 0;
+    this.gameOver = false;
+  }
+
+  restart() {
+    this.player.restart();
+    this.initialize();
   }
 
   render(context: CanvasRenderingContext2D) {

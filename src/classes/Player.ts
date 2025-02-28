@@ -35,9 +35,9 @@ class Player {
       this.x += this.speed;
     }
 
-    if (this.game.keys.indexOf("1") > -1) {
-      this.shoot();
-    }
+    // if (this.game.keys.indexOf("1") > -1) {
+    //   this.shoot();
+    // }
 
     // horizontal boundaries
     if (this.x < -this.width * 0.5) {
@@ -52,6 +52,12 @@ class Player {
     if (projectile) {
       projectile.start(this.x + this.width * 0.5, this.y);
     }
+  }
+
+  restart() {
+    this.x = this.game.width * 0.5 - this.width * 0.5;
+    this.y = this.game.height - this.height;
+    this.lives = 3;
   }
 }
 
